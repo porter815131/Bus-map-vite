@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Fragment, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
@@ -195,31 +195,27 @@ const city = [
   },
 ];
 
-const people = [
-  {
-    id: 1,
-    name: 'Wade Cooper',
-    avatar:
-      'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-];
-
 console.log(classNames);
 
-const Menu = () => {
+const Menu = ({ setSelectedCity }) => {
   const [selected, setSelected] = useState(city[0]);
 
+  useEffect(() => {
+    setSelectedCity(selected);
+  }, [selected]);
+
+  console.log(selected);
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>
-          <Listbox.Label className='block text-sm font-medium text-gray-700'>
+          <Listbox.Label className=' mx-5 block text-sm font-medium text-gray-700'>
             城市
           </Listbox.Label>
           <div className='mt-1 relative'>
-            <Listbox.Button className='z-10 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>
+            <Listbox.Button className='mr-20 z-10 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>
               <span className='flex items-center justify-center'>
-                <span className='ml-3 block truncate text-2xl'>
+                <span className='ml-3 block truncate text-2xl w-[10rem] text-center'>
                   {selected.CityName}
                 </span>
               </span>
