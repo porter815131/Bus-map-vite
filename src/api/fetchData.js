@@ -1,4 +1,6 @@
-import { TIMEOUT_SEC } from './config';
+// import { GetAuthorizationHeader } from './authorization';
+import jsSHA from 'jssha';
+import { TIMEOUT_SEC } from '../store/config';
 
 const timeout = function (s) {
   return new Promise(function (_, reject) {
@@ -9,8 +11,8 @@ const timeout = function (s) {
     }, s * 1000);
   });
 };
-
-const GetAuthorizationHeader = function () {
+/* Header 驗證 */
+export const GetAuthorizationHeader = function () {
   // const AppID = import.meta.env.VITE_APP_ID;
   const AppID = '594eb9b317b144dd881f17b914ead36b';
 
@@ -33,11 +35,12 @@ const GetAuthorizationHeader = function () {
     Authorization: Authorization,
     'X-Date': GMTString,
     'Accept-Encoding': 'gzip',
-  }; //如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量
+  }; /* 如果要將js運行在伺服器，可額外加入 'Accept-Encoding': 'gzip'，要求壓縮以減少網路傳輸資料量 */
 };
 
-export const getJSON = async function (url) {
+export const fetchData = async url => {
   try {
+    /* 加上 timeout 確保 API 依順序 resolve */
     const res = await Promise.race([
       fetch(url, {
         method: 'GET',
@@ -45,12 +48,11 @@ export const getJSON = async function (url) {
       }),
       timeout(TIMEOUT_SEC),
     ]);
-
-    const data = await res.json();
-
     if (!res.ok) throw new Error(`${res.Message} ${res.status}`);
+    const data = await res.json();
     return data;
+    console.log(data);
   } catch (err) {
-    throw err;
+    console.error(err);
   }
 };

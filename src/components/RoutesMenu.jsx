@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Fragment, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
-import { getJSON } from '../store/getJson';
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join('');
@@ -12,14 +11,11 @@ const RoutesMenu = ({ routes, city, setRoutes }) => {
   const [route, setRoute] = useState([]);
   const [state, setState] = useState([]);
 
-  console.log(city);
-
   useEffect(() => {
-    if (city === 'none') setRoutes([]);
     setState(route);
+    if (city === 'none') setRoutes([]);
   }, [route, city]);
 
-  console.log(route);
   return (
     <Listbox value={route} onChange={setRoute}>
       {({ open }) => (

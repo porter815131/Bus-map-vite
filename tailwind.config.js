@@ -10,6 +10,7 @@ module.exports = {
       screens: {
         mf: '43.75em',
       },
+
       keyframes: {
         'slide-in': {
           '0%': {

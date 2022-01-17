@@ -1,17 +1,12 @@
-import React from 'react';
-import { BUS_API_URL } from '../store/config';
+import React, { useEffect, useState } from 'react';
 
-const RoutingList = () => {
+const RoutingList = ({ stopName, key, stopSequence, time }) => {
   return (
-    <div className='w-[50%] flex flex-col mx-10 items-center'>
-      <ul>
-        <li>station</li>
-        <li>station</li>
-        <li>station</li>
-        <li>station</li>
-        <li>station</li>
-      </ul>
-    </div>
+    <li key={key} className='flex w-full justify-between items-center '>
+      <p>{stopSequence}</p>
+      <p>{stopName}</p>
+      <p>{time}</p>
+    </li>
   );
 };
 

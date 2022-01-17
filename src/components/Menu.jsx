@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Fragment, useState } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
-import { getJSON } from '../store/getJson';
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join('');
@@ -10,7 +9,7 @@ const classNames = (...classes) => {
 
 const city = [
   {
-    CityID: 'initial',
+    CityID: '0',
     CityName: '--- 請選擇 ---',
     CityCode: 'none',
     City: 'none',
@@ -195,16 +194,15 @@ const city = [
   },
 ];
 
-console.log(classNames);
-
-const Menu = ({ setSelectedCity }) => {
+const Menu = ({ setSelectedCity, setIsSelect, setRoutes }) => {
   const [selected, setSelected] = useState(city[0]);
 
   useEffect(() => {
+    Number(selected.CityID) !== 0 ? setIsSelect(true) : setIsSelect(false);
     setSelectedCity(selected);
+    setRoutes();
   }, [selected]);
 
-  console.log(selected);
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
