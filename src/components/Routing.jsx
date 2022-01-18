@@ -23,12 +23,13 @@ const Routing = () => {
   const [toggleRound, setToggleRound] = useState(true);
   const [forthTrip, setForthTrip] = useState([]);
   const [backTrip, setBackTrip] = useState([]);
-
   const [busData, setBusData] = useState({
     routes: [],
     stops: [],
     estimateTime: [],
   });
+  console.log('ROUTENAME', routeName);
+
   /* 選擇城市 */
   const city = selectedCity.City;
   /* 過濾已選城市的全部站點資料 */
@@ -92,6 +93,8 @@ const Routing = () => {
     }
   }, [routeName]);
 
+  console.log(busData);
+
   return (
     <section className='flex w-full flex-col justify-center items-center p-2 mt-10'>
       <header className='w-[80vw] flex justify-center items-center flex-col shadow-md'>
@@ -115,7 +118,7 @@ const Routing = () => {
         <p className='text-3xl my-10'>路線名稱</p>
       </div>
       <div className='w-[80vw] flex justify-center items-center relative'>
-        <Map />
+        <Map busData={busData} routeName={routeName} city={city} />
         <div className='w-[50%] mx-10 items-center shadow-lg '>
           <div className='flex w-full justify-around border-b '>
             <button
