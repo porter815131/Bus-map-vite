@@ -26,6 +26,12 @@ body {
   display: none;
 }
 
+.stop_pin:hover {
+  background-color: rgba(54, 67, 208, 0.879);
+  overflow: hidden;
+  border-radius: 50%;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

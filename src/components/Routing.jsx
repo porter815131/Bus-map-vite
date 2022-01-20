@@ -28,7 +28,6 @@ const Routing = () => {
     stops: [],
     estimateTime: [],
   });
-  console.log('ROUTENAME', routeName);
 
   /* 選擇城市 */
   const city = selectedCity.City;
@@ -68,32 +67,34 @@ const Routing = () => {
       const forthTime = estimateFilter.filter(time => !time.Direction);
       const backStops = stopsFilter.filter(trip => trip.Direction);
       const backTime = estimateFilter.filter(time => time.Direction);
+
       /* 把去程資料調整成我的格式 */
       const forthFilter = forthStops[0]?.Stops.map((item, i) => {
         return {
           stopUID: item.StopUID,
           stopName: item.StopName.Zh_tw,
+          position: item.StopPosition,
           stopSequence: item.StopSequence,
-          time: forthTime[i].EstimateTime,
+          time: forthTime[i]?.EstimateTime,
           plate: forthTime[i]?.PlateNumb,
         };
       });
+
       setForthTrip(forthFilter);
       /* 把回程資料調整成我的格式 */
       const backFilter = backStops[0]?.Stops.map((item, i) => {
         return {
           stopUID: item.StopUID,
           stopName: item.StopName.Zh_tw,
+          position: item.StopPosition,
           stopSequence: item.StopSequence,
-          time: backTime[i].EstimateTime,
+          time: backTime[i]?.EstimateTime,
           plate: forthTime[i]?.PlateNumb,
         };
       });
       setBackTrip(backFilter);
     }
-  }, [routeName]);
-
-  console.log(busData);
+  }, [routeName, busData]);
 
   return (
     <section className='flex w-full flex-col justify-center items-center p-2 mt-10'>
@@ -118,7 +119,13 @@ const Routing = () => {
         <p className='text-3xl my-10'>路線名稱</p>
       </div>
       <div className='w-[80vw] flex justify-center items-center relative'>
-        <Map busData={busData} routeName={routeName} city={city} />
+        <Map
+          forthTrip={forthTrip}
+          backTrip={backTrip}
+          routeName={routeName}
+          city={city}
+          toggleRound={toggleRound}
+        />
         <div className='w-[50%] mx-10 items-center shadow-lg '>
           <div className='flex w-full justify-around border-b '>
             <button
