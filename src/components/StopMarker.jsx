@@ -9,11 +9,12 @@ const pinIcon = new Icon({
   className: 'stop_pin',
 });
 
-const StopMarker = ({ key, position, stopNumber }) => {
+const StopMarker = ({ key, position, stopNumber, stopName }) => {
   return (
     <Marker key={key} icon={pinIcon} position={position}>
       <Tooltip offset={[0, -20]} direction='top' opacity={1}>
-        {stopNumber}
+        <p className='font-extrabold'>{stopNumber}</p>
+        <h1 className='text-base'>{stopName}</h1>
       </Tooltip>
     </Marker>
   );
