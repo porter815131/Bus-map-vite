@@ -1,11 +1,12 @@
 import React from 'react';
 import { Icon } from 'leaflet';
-import { Marker, Popup, Tooltip } from 'react-leaflet';
+import { Marker, Popup, Tooltip, useMap } from 'react-leaflet';
 
 const pinIcon = new Icon({
   iconUrl: 'src/asset/bus-stop.png',
   iconRetinaUrl: 'src/asset/bus-stop.png',
   iconSize: [40, 40],
+  iconAnchor: [17, 42],
   className: 'stop_pin',
 });
 

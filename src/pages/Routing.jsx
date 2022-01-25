@@ -1,11 +1,10 @@
-import { Menu } from './';
+import { Menu, SearchRoutes } from '../components/';
 import React, { useEffect, useState } from 'react';
-import { Map, RoutingList } from './';
+import { Map, RoutingList } from '../components/';
 import { fetchData } from '../api/fetchData';
+import bus from '../asset/bus-hero.jpg';
 
 import { STOP_ETOA_URL, STOP_API_URL, CITY_ROUTES_URL } from '../store/config';
-import SearchRoutes from './SearchRoutes';
-import RoutesMenu from './RoutesMenu';
 
 /*     City data format
  *     CityID: 'initial',
@@ -18,6 +17,7 @@ import RoutesMenu from './RoutesMenu';
 
 const Routing = () => {
   const [routeName, setRouteName] = useState('');
+  const [routeValue, setRouteValue] = useState('');
   const [isSelect, setIsSelect] = useState(false); /* 是否有選城市 */
   const [selectedCity, setSelectedCity] = useState('');
   const [toggleRound, setToggleRound] = useState(true);
@@ -28,6 +28,8 @@ const Routing = () => {
     stops: [],
     estimateTime: [],
   });
+
+  console.log(routeValue);
 
   /* 選擇城市 */
   const city = selectedCity.City;
@@ -97,9 +99,16 @@ const Routing = () => {
   }, [routeName, busData]);
 
   return (
-    <section className='flex w-full flex-col justify-center items-center p-2 mt-10'>
-      <header className='w-[80vw] flex justify-center items-center flex-col shadow-md'>
-        <h1 className='flex p-2 text-2xl justify-center items-center'>
+    <section className='flex w-full flex-col justify-center items-center p-2 mt-2 '>
+      <img
+        src={bus}
+        alt='Bus'
+        className='w-full absolute top-0 z-[-100] overflow-hidden bg-cover'
+      />
+
+      {/* <div className='w-full flex justify-center items-center  flex-col relative z-[-100] overflow-auto'></div> */}
+      <header className='w-[80vw] flex justify-center items-center flex-col shadow-lg rounded-2xl bg-white '>
+        <h1 className='flex p-2 text-2xl justify-center items-center font-extrabold tracking-[2rem]'>
           搜尋公車
         </h1>
         <div className='flex justify-center items-center my-5 w-[70vw]'>
@@ -111,12 +120,27 @@ const Routing = () => {
           <SearchRoutes
             routes={busData}
             setRouteName={setRouteName}
+            setRouteValue={setRouteValue}
             isSelect={isSelect}
           />
         </div>
       </header>
-      <div className='flex w-[70vw] justify-center items-center'>
-        <p className='text-3xl my-10'>路線名稱</p>
+      <div className='flex w-max justify-center items-center bg-white p-3 m-3 rounded-[1rem]'>
+        <div className='text-3xl font-medium p-3'>
+          {routeValue ? (
+            <p className='w-fit felx'>
+              <span className='text-[#bb3d3d] text-center mr-2 w-fit'>
+                {routeValue.split(' ', 1)}
+              </span>
+              <span className='text-[#ccc]'>|</span>
+              <span className='ml-2 text-center w-fit'>
+                {routeValue.split(' ').slice(1).join(' ')}
+              </span>
+            </p>
+          ) : (
+            '路線名稱'
+          )}
+        </div>
       </div>
       <div className='w-[80vw] flex justify-center items-center relative'>
         <Map
@@ -126,26 +150,26 @@ const Routing = () => {
           city={city}
           toggleRound={toggleRound}
         />
-        <div className='w-[50%] mx-10 items-center shadow-lg '>
-          <div className='flex w-full justify-around border-b '>
+        <div className='w-[50%] h-[60vh] ml-10 flex flex-col justify-center items-center shadow-lg bg-white rounded-lg'>
+          <div className='flex w-full justify-around border-b p-3 divide-x-2 '>
             <button
-              className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full'
+              className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full no-underline'
               onClick={() => setToggleRound(true)}
             >
               去程
             </button>
             <button
-              className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full'
+              className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full '
               onClick={() => setToggleRound(false)}
             >
               返程
             </button>
           </div>
-          <ol className='flex w-full h-[37.5rem] flex-col overflow-scroll'>
-            <li className='flex w-full justify-between p-3 border-b-2 '>
-              <p>站序</p>
-              <p>站名</p>
-              <p>預估到站</p>
+          <ol className='flex w-full h-[91%] flex-col overflow-scroll'>
+            <li className='flex w-full justify-center divide-x p-2 border-2'>
+              <p className='font-medium flex-[0.2] text-center'>站序</p>
+              <p className='font-medium flex-[0.45] text-center'>站名</p>
+              <p className='font-medium flex-[0.35] text-center'>預估到站</p>
             </li>
             {city !== 'none' &&
               (toggleRound ? forthTrip : backTrip)?.map(stop => (

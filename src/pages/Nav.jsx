@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
-import { FaBusAlt } from 'react-icons/fa';
+
 import { HiMenu } from 'react-icons/hi';
 import { CgClose } from 'react-icons/cg';
+import { GiBus } from 'react-icons/gi';
+import { Link } from 'react-router-dom';
 
-const NavbarItem = ({ title, classProps }) => {
-  return <li className={`mx-4 cursor-pointer ${classProps}`}>{title}</li>;
+const NavbarItem = ({ title, classProps, path }) => {
+  return (
+    <li className={`mx-4 cursor-pointer ${classProps}`}>
+      <Link to={path}>{title}</Link>
+    </li>
+  );
 };
 
 const Nav = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
 
   return (
-    <nav className='w-full  flex justify-between items-center h-16 p-6 pt-6 bg-black sticky'>
-      <div className='w-min flex justify-center items-center'>
-        <FaBusAlt color='white' size={50} />
-        <p className='text-3xl text-white'>TWBUS</p>
+    <nav className='w-full flex justify-between items-center h-20 bg-transparent p-6 pt-6  sticky cursor-pointer'>
+      <div className='w-max flex justify-center items-center '>
+        <GiBus color='white' size={50} />
+
+        <p className='text-4xl text-white font-extrabold '>TAIWAN BUS</p>
       </div>
 
       <ul className='mf:flex hidden flex-initial list-none justify-between items-center'>
@@ -23,10 +30,11 @@ const Nav = () => {
             key={item + index}
             title={item}
             classProps='text-white text-3xl'
+            path={item.trim().toLowerCase()}
           />
         ))}
       </ul>
-      <div className='flex relative justify-end'>
+      <div className='flex relative justify-end mf:hidden'>
         {toggleMenu ? (
           <CgClose
             fontSize={28}
@@ -50,6 +58,7 @@ const Nav = () => {
                 key={item + index}
                 title={item}
                 classProps='text-6xl my-2 text-lg'
+                path={item.trim().toLowerCase()}
               />
             ))}
           </ul>

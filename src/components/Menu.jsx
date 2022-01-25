@@ -239,7 +239,7 @@ const Menu = ({ setSelectedCity, setIsSelect, setRoutes }) => {
                     className={({ active }) =>
                       classNames(
                         active
-                          ? 'text-white bg-indigo-600 text-2xl'
+                          ? 'text-white bg-indigo-600 text-2xl z-10'
                           : 'text-gray-900',
                         ' select-none relative py-2 pl-3 pr-9'
                       )

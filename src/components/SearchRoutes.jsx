@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SelectorIcon } from '@heroicons/react/solid';
-import AsyncSelect from 'react-select';
 
-const SearchRoutes = ({ setRouteName, routes, isSelect }) => {
+const SearchRoutes = ({ setRouteName, routes, isSelect, setRouteValue }) => {
   const [inputValue, setInputValue] = useState('');
 
   // 縣市變動即清空 input
   useEffect(() => {
     setInputValue('');
+    setRouteValue('');
   }, [routes]);
 
   const inputChangeHandler = e => {
@@ -30,9 +30,8 @@ const SearchRoutes = ({ setRouteName, routes, isSelect }) => {
 
     setRouteName(hiddenInput.value.split(' ', 1)[0]);
     setInputValue(e.target.value);
+    setRouteValue(hiddenInput.value.split(' ').slice(1).join(' '));
   };
-
-  // console.log(inputValue?.split(' ').slice(1).join(' '));
 
   return (
     <div className='flex w-[50%] justify-center items-center mx-5 '>
@@ -46,12 +45,12 @@ const SearchRoutes = ({ setRouteName, routes, isSelect }) => {
         type='text'
         list='routes'
         onChange={inputChangeHandler}
+        onFocus={() => setInputValue('')}
         id='routeName'
       />
       <datalist
         className='ml-3 truncate  flex justify-center items-center w-min'
         id='routes'
-        onChange={e => console.log(e)}
       >
         {isSelect &&
           routes?.routes?.map(list => (
