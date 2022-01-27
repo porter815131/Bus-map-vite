@@ -29,7 +29,7 @@ const Nav = () => {
           <NavbarItem
             key={item + index}
             title={item}
-            classProps='text-white text-3xl'
+            classProps='text-white text-3xl hover:border-b-4 duration-100 ease-in-out'
             path={item.trim().toLowerCase()}
           />
         ))}
@@ -57,7 +57,7 @@ const Nav = () => {
               <NavbarItem
                 key={item + index}
                 title={item}
-                classProps='text-6xl my-2 text-lg'
+                classProps='text-6xl my-2 text-lg hover:border-b-2'
                 path={item.trim().toLowerCase()}
               />
             ))}

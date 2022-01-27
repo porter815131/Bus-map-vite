@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SelectorIcon } from '@heroicons/react/solid';
 
-const SearchRoutes = ({ setRouteName, routes, isSelect, setRouteValue }) => {
+const SearchRoutes = ({
+  setRouteName,
+  routes,
+  isSelect,
+  setRouteValue,
+  setIsLoading,
+}) => {
   const [inputValue, setInputValue] = useState('');
 
   // 縣市變動即清空 input
@@ -12,6 +18,7 @@ const SearchRoutes = ({ setRouteName, routes, isSelect, setRouteValue }) => {
 
   const inputChangeHandler = e => {
     /**使用 dataset 取 routeName, 不會顯示在 option 上影響使用者體驗 */
+
     let input = e.target,
       list = input.getAttribute('list'),
       options = document.querySelectorAll('#' + list + ' option'),
@@ -34,14 +41,14 @@ const SearchRoutes = ({ setRouteName, routes, isSelect, setRouteValue }) => {
   };
 
   return (
-    <div className='flex w-[50%] justify-center items-center mx-5 '>
-      <label className='w-10 ml-20 mx-5 block text-sm font-medium text-gray-700'>
+    <div className='flex w-[50%] justify-end items-center mx-2 '>
+      <label className='mx-5 block text-sm font-medium text-gray-700 '>
         路線
       </label>
       <input
-        placeholder='例如: 307'
+        placeholder='例如: 939、932、棕1…'
         value={inputValue}
-        className='z-10 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-2 py-2 text-left cursor-default focus:outline text-xl'
+        className='z-10 relative w-[80%] h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-2 py-2 text-left cursor-pointer focus:outline text-lg'
         type='text'
         list='routes'
         onChange={inputChangeHandler}
@@ -65,10 +72,6 @@ const SearchRoutes = ({ setRouteName, routes, isSelect, setRouteValue }) => {
           ))}
       </datalist>
       <input type='hidden' name='searchRoutes' id='routeName-hidden' />
-      {/* <SelectorIcon
-        className='h-5 w-5 text-gray-400 absolute right-6 z-10 '
-        aria-hidden='true'
-      /> */}
     </div>
   );
 };

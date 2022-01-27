@@ -211,9 +211,9 @@ const Menu = ({ setSelectedCity, setIsSelect, setRoutes }) => {
             城市
           </Listbox.Label>
           <div className='mt-1 relative'>
-            <Listbox.Button className='mr-20 z-10 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>
+            <Listbox.Button className='mr-20 z-10 relative w-full h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>
               <span className='flex items-center justify-center'>
-                <span className='ml-3 block truncate text-2xl w-[10rem] text-center'>
+                <span className='ml-3 block truncate text-lg w-[10rem] text-center'>
                   {selected.CityName}
                 </span>
               </span>

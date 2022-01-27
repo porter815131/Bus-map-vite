@@ -1,5 +1,5 @@
 import { Menu, SearchRoutes } from '../components/';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Map, RoutingList } from '../components/';
 import { fetchData } from '../api/fetchData';
 import bus from '../asset/bus-hero.jpg';
@@ -15,9 +15,10 @@ import { STOP_ETOA_URL, STOP_API_URL, CITY_ROUTES_URL } from '../store/config';
  *     Version: '21.08.1',
  */
 
-const Routing = () => {
+const Routing = ({ setIsLoading }) => {
   const [routeName, setRouteName] = useState('');
   const [routeValue, setRouteValue] = useState('');
+
   const [isSelect, setIsSelect] = useState(false); /* 是否有選城市 */
   const [selectedCity, setSelectedCity] = useState('');
   const [toggleRound, setToggleRound] = useState(true);
@@ -28,8 +29,6 @@ const Routing = () => {
     stops: [],
     estimateTime: [],
   });
-
-  console.log(routeValue);
 
   /* 選擇城市 */
   const city = selectedCity.City;
@@ -42,9 +41,27 @@ const Routing = () => {
     time => time.RouteUID === routeName
   );
 
+  // const getData = useCallback(city => {
+  //   Promise.all([
+  //     fetchData(`${CITY_ROUTES_URL}${city}`),
+  //     fetchData(`${STOP_API_URL}${city}`),
+  //     fetchData(`${STOP_ETOA_URL}${city}`),
+  //   ])
+  //     .then(results => {
+  //       setBusData({
+  //         routes: results[0],
+  //         stops: results[1],
+  //         estimateTime: results[2],
+  //       });
+  //       setIsLoading(false);
+  //     })
+  //     .catch(err => console.error(err));
+  // }, []);
+
   /* 接 api 並整合資料 */
   useEffect(() => {
     if (city === 'none') return;
+    setIsLoading(true);
     const getData = city => {
       Promise.all([
         fetchData(`${CITY_ROUTES_URL}${city}`),
@@ -57,18 +74,22 @@ const Routing = () => {
             stops: results[1],
             estimateTime: results[2],
           });
+          setIsLoading(false);
         })
         .catch(err => console.error(err));
     };
     getData(city);
+    const interval = setInterval(() => {
+      getData(city);
+    }, 30000);
+    return () => clearInterval(interval);
   }, [city]);
 
   useEffect(() => {
     if (stopsFilter && estimateFilter) {
+      setIsLoading(true);
       const forthStops = stopsFilter.filter(trip => !trip.Direction);
-      const forthTime = estimateFilter.filter(time => !time.Direction);
       const backStops = stopsFilter.filter(trip => trip.Direction);
-      const backTime = estimateFilter.filter(time => time.Direction);
 
       /* 把去程資料調整成我的格式 */
       const forthFilter = forthStops[0]?.Stops.map((item, i) => {
@@ -77,11 +98,8 @@ const Routing = () => {
           stopName: item.StopName.Zh_tw,
           position: item.StopPosition,
           stopSequence: item.StopSequence,
-          time: forthTime[i]?.EstimateTime,
-          plate: forthTime[i]?.PlateNumb,
         };
       });
-
       setForthTrip(forthFilter);
       /* 把回程資料調整成我的格式 */
       const backFilter = backStops[0]?.Stops.map((item, i) => {
@@ -90,11 +108,11 @@ const Routing = () => {
           stopName: item.StopName.Zh_tw,
           position: item.StopPosition,
           stopSequence: item.StopSequence,
-          time: backTime[i]?.EstimateTime,
-          plate: forthTime[i]?.PlateNumb,
         };
       });
+
       setBackTrip(backFilter);
+      setIsLoading(false);
     }
   }, [routeName, busData]);
 
@@ -106,12 +124,11 @@ const Routing = () => {
         className='w-full absolute top-0 z-[-100] overflow-hidden bg-cover'
       />
 
-      {/* <div className='w-full flex justify-center items-center  flex-col relative z-[-100] overflow-auto'></div> */}
       <header className='w-[80vw] flex justify-center items-center flex-col shadow-lg rounded-2xl bg-white '>
         <h1 className='flex p-2 text-2xl justify-center items-center font-extrabold tracking-[2rem]'>
           搜尋公車
         </h1>
-        <div className='flex justify-center items-center my-5 w-[70vw]'>
+        <div className='flex justify-center items-center my-5 w-[80vw]'>
           <Menu
             setSelectedCity={setSelectedCity}
             setIsSelect={setIsSelect}
@@ -125,7 +142,7 @@ const Routing = () => {
           />
         </div>
       </header>
-      <div className='flex w-max justify-center items-center bg-white p-3 m-3 rounded-[1rem]'>
+      <div className='flex w-max justify-center items-center bg-white p-3 m-3 my-10 rounded-[1rem]'>
         <div className='text-3xl font-medium p-3'>
           {routeValue ? (
             <p className='w-fit felx'>
@@ -153,16 +170,18 @@ const Routing = () => {
         <div className='w-[50%] h-[60vh] ml-10 flex flex-col justify-center items-center shadow-lg bg-white rounded-lg'>
           <div className='flex w-full justify-around border-b p-3 divide-x-2 '>
             <button
-              className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full no-underline'
+              className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full '
               onClick={() => setToggleRound(true)}
             >
-              去程
+              {routeValue ? `往 ${routeValue.split('-')[1]}` : '去程'}
             </button>
             <button
               className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full '
               onClick={() => setToggleRound(false)}
             >
-              返程
+              {routeValue
+                ? `往 ${routeValue.split('-')[0].split(' ', 2)[1]}`
+                : '返程'}
             </button>
           </div>
           <ol className='flex w-full h-[91%] flex-col overflow-scroll'>
@@ -175,9 +194,11 @@ const Routing = () => {
               (toggleRound ? forthTrip : backTrip)?.map(stop => (
                 <RoutingList
                   key={stop.stopUID}
+                  id={stop.stopUID}
                   stopName={stop.stopName}
                   stopSequence={stop.stopSequence}
-                  time={stop.time}
+                  estimateFilter={estimateFilter}
+                  toggleRound={toggleRound}
                 />
               ))}
           </ol>

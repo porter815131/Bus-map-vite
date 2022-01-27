@@ -6,3 +6,4 @@ export { default as RoutingList } from './RoutingList';
 export { default as Menu } from './Menu';
 export { default as StopMarker } from './StopMarker';
 export { default as SearchRoutes } from './SearchRoutes';
+export { default as Modal } from './Modal';

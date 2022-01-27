@@ -3,10 +3,10 @@ import { Icon } from 'leaflet';
 import { Marker, Popup, Tooltip, useMap } from 'react-leaflet';
 
 const pinIcon = new Icon({
-  iconUrl: 'src/asset/bus-stop.png',
-  iconRetinaUrl: 'src/asset/bus-stop.png',
-  iconSize: [40, 40],
-  iconAnchor: [17, 42],
+  iconUrl: 'src/asset/circle-stop.png',
+  iconRetinaUrl: 'src/asset/circle-stop.png',
+  iconSize: [20, 20],
+  // iconAnchor: [17, 42],
   className: 'stop_pin',
 });
 
