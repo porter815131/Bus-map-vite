@@ -7,6 +7,7 @@ const SearchRoutes = ({
   isSelect,
   setRouteValue,
   setIsLoading,
+  routeValue,
 }) => {
   const [inputValue, setInputValue] = useState('');
 
@@ -37,18 +38,21 @@ const SearchRoutes = ({
 
     setRouteName(hiddenInput.value.split(' ', 1)[0]);
     setInputValue(e.target.value);
-    setRouteValue(hiddenInput.value.split(' ').slice(1).join(' '));
+    setRouteValue({
+      ...routeValue,
+      route: hiddenInput.value.split(' ').slice(1).join(' '),
+    });
   };
 
   return (
-    <div className='flex w-[50%] justify-end items-center mx-2 '>
+    <div className='flex w-[50%] sm:w-full sm:flex-col justify-end items-center mx-2 sm:my-2 '>
       <label className='mx-5 block text-sm font-medium text-gray-700 '>
         路線
       </label>
       <input
         placeholder='例如: 939、932、棕1…'
         value={inputValue}
-        className='z-10 relative w-[80%] h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-2 py-2 text-left cursor-pointer focus:outline text-lg'
+        className='z-10 relative w-[80%] sm:w-full h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-2 py-2 sm:mt-2 text-left cursor-pointer focus:outline text-lg sm:text-sm'
         type='text'
         list='routes'
         onChange={inputChangeHandler}

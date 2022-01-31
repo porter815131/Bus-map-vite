@@ -1,8 +1,8 @@
 import { Menu, SearchRoutes } from '../components/';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Map, RoutingList } from '../components/';
 import { fetchData } from '../api/fetchData';
-import bus from '../asset/bus-hero.jpg';
+// import bus from '../asset/bus-hero.jpg';
 
 import { STOP_ETOA_URL, STOP_API_URL, CITY_ROUTES_URL } from '../store/config';
 
@@ -17,7 +17,7 @@ import { STOP_ETOA_URL, STOP_API_URL, CITY_ROUTES_URL } from '../store/config';
 
 const Routing = ({ setIsLoading }) => {
   const [routeName, setRouteName] = useState('');
-  const [routeValue, setRouteValue] = useState('');
+  const [routeValue, setRouteValue] = useState({ route: '' });
 
   const [isSelect, setIsSelect] = useState(false); /* 是否有選城市 */
   const [selectedCity, setSelectedCity] = useState('');
@@ -41,23 +41,6 @@ const Routing = ({ setIsLoading }) => {
     time => time.RouteUID === routeName
   );
 
-  // const getData = useCallback(city => {
-  //   Promise.all([
-  //     fetchData(`${CITY_ROUTES_URL}${city}`),
-  //     fetchData(`${STOP_API_URL}${city}`),
-  //     fetchData(`${STOP_ETOA_URL}${city}`),
-  //   ])
-  //     .then(results => {
-  //       setBusData({
-  //         routes: results[0],
-  //         stops: results[1],
-  //         estimateTime: results[2],
-  //       });
-  //       setIsLoading(false);
-  //     })
-  //     .catch(err => console.error(err));
-  // }, []);
-
   /* 接 api 並整合資料 */
   useEffect(() => {
     if (city === 'none') return;
@@ -70,6 +53,7 @@ const Routing = ({ setIsLoading }) => {
       ])
         .then(results => {
           setBusData({
+            ...busData,
             routes: results[0],
             stops: results[1],
             estimateTime: results[2],
@@ -79,12 +63,17 @@ const Routing = ({ setIsLoading }) => {
         .catch(err => console.error(err));
     };
     getData(city);
+
+    /**尚無法解決refresh後，路線會消失的問題 */
+    /** 
     const interval = setInterval(() => {
       getData(city);
     }, 30000);
     return () => clearInterval(interval);
+    */
   }, [city]);
 
+  console.log(busData);
   useEffect(() => {
     if (stopsFilter && estimateFilter) {
       setIsLoading(true);
@@ -117,18 +106,13 @@ const Routing = ({ setIsLoading }) => {
   }, [routeName, busData]);
 
   return (
-    <section className='flex w-full flex-col justify-center items-center p-2 mt-2 '>
-      <img
-        src={bus}
-        alt='Bus'
-        className='w-full absolute top-0 z-[-100] overflow-hidden bg-cover'
-      />
-
-      <header className='w-[80vw] flex justify-center items-center flex-col shadow-lg rounded-2xl bg-white '>
-        <h1 className='flex p-2 text-2xl justify-center items-center font-extrabold tracking-[2rem]'>
+    <section className='flex w-full h-screen flex-col justify-start sm:justify- items-center my-4 sm:mt-5  '>
+      {/* <img src={bus} alt='Bus' className='w-full z-[-100] bg-top bg-cover' /> */}
+      <header className='w-[80vw] sm:w-full flex justify-center items-center flex-col shadow-lg sm:shadow-none rounded-2xl sm:rounded-none bg-white mb-4'>
+        <h1 className='flex p-2 text-2xl justify-center items-center font-extrabold tracking-[2rem] sm:tracking-tighter'>
           搜尋公車
         </h1>
-        <div className='flex justify-center items-center my-5 w-[80vw]'>
+        <div className='flex sm:flex-col justify-center items-center my-5 w-[80vw]'>
           <Menu
             setSelectedCity={setSelectedCity}
             setIsSelect={setIsSelect}
@@ -139,69 +123,77 @@ const Routing = ({ setIsLoading }) => {
             setRouteName={setRouteName}
             setRouteValue={setRouteValue}
             isSelect={isSelect}
+            routeValue={routeValue}
           />
         </div>
       </header>
-      <div className='flex w-max justify-center items-center bg-white p-3 m-3 my-10 rounded-[1rem]'>
-        <div className='text-3xl font-medium p-3'>
-          {routeValue ? (
-            <p className='w-fit felx'>
-              <span className='text-[#bb3d3d] text-center mr-2 w-fit'>
-                {routeValue.split(' ', 1)}
-              </span>
-              <span className='text-[#ccc]'>|</span>
-              <span className='ml-2 text-center w-fit'>
-                {routeValue.split(' ').slice(1).join(' ')}
-              </span>
-            </p>
-          ) : (
-            '路線名稱'
-          )}
-        </div>
-      </div>
-      <div className='w-[80vw] flex justify-center items-center relative'>
-        <Map
-          forthTrip={forthTrip}
-          backTrip={backTrip}
-          routeName={routeName}
-          city={city}
-          toggleRound={toggleRound}
-        />
-        <div className='w-[50%] h-[60vh] ml-10 flex flex-col justify-center items-center shadow-lg bg-white rounded-lg'>
-          <div className='flex w-full justify-around border-b p-3 divide-x-2 '>
-            <button
-              className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full '
-              onClick={() => setToggleRound(true)}
-            >
-              {routeValue ? `往 ${routeValue.split('-')[1]}` : '去程'}
-            </button>
-            <button
-              className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full '
-              onClick={() => setToggleRound(false)}
-            >
-              {routeValue
-                ? `往 ${routeValue.split('-')[0].split(' ', 2)[1]}`
-                : '返程'}
-            </button>
+      <div className='flex w-full h-full flex-col justify-center sm:justify-between items-center bg-white mt-8 sm:mt-0'>
+        <div className='flex w-max justify-center items-center bg-white p-3 sm:p-1 m-3 my-10 sm:mt-0 rounded-[1rem] border-4 shadow-md'>
+          <div className='text-3xl sm:text-sm font-medium p-3'>
+            {routeValue ? (
+              <p className='w-fit felx'>
+                <span className='text-[#bb3d3d] text-center mr-2 w-fit'>
+                  {routeValue.route.split(' ', 1)}
+                </span>
+                <span className='text-[#ccc]'>|</span>
+                <span className='ml-2 text-center w-fit'>
+                  {routeValue.route.split(' ').slice(1).join(' ')}
+                </span>
+              </p>
+            ) : (
+              '路線名稱'
+            )}
           </div>
-          <ol className='flex w-full h-[91%] flex-col overflow-scroll'>
-            <li className='flex w-full justify-center divide-x p-2 border-2'>
-              <p className='font-medium flex-[0.2] text-center'>站序</p>
-              <p className='font-medium flex-[0.45] text-center'>站名</p>
-              <p className='font-medium flex-[0.35] text-center'>預估到站</p>
-            </li>
-            {city !== 'none' &&
-              (toggleRound ? forthTrip : backTrip)?.map(stop => (
-                <RoutingList
-                  key={stop.stopUID}
-                  id={stop.stopUID}
-                  stopName={stop.stopName}
-                  stopSequence={stop.stopSequence}
-                  estimateFilter={estimateFilter}
-                  toggleRound={toggleRound}
-                />
-              ))}
-          </ol>
+        </div>
+        <div className='w-[80vw] sm:w-full flex sm:flex-col justify-center items-center relative'>
+          <Map
+            forthTrip={forthTrip}
+            backTrip={backTrip}
+            routeName={routeName}
+            city={city}
+            toggleRound={toggleRound}
+          />
+          <div className='w-[50%] sm:w-full h-[60vh] ml-10 sm:ml-0 sm:mt-4 flex flex-col justify-center items-center shadow-lg bg-white rounded-lg sm:rounded-none border-2 sm:border-t-2'>
+            <div className='flex w-full justify-around border-b p-3 divide-x-2 '>
+              <button
+                className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full '
+                onClick={() => setToggleRound(true)}
+              >
+                {routeValue ? `往 ${routeValue.route.split('-')[1]}` : '去程'}
+              </button>
+              <button
+                className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full '
+                onClick={() => setToggleRound(false)}
+              >
+                {routeValue
+                  ? `往 ${routeValue.route.split('-')[0].split(' ', 2)[1]}`
+                  : '返程'}
+              </button>
+            </div>
+            <ol className='flex w-full h-[91%] flex-col overflow-scroll'>
+              <li className='flex w-full justify-center divide-x p-2 border-b-[1px]'>
+                <p className='font-medium flex-[0.2] text-center'>站序</p>
+                <p className='font-medium flex-[0.45] text-center'>站名</p>
+                <p className='font-medium flex-[0.35] text-center'>預估到站</p>
+              </li>
+              {city !== 'none' ? (
+                (toggleRound ? forthTrip : backTrip)?.map(stop => (
+                  <RoutingList
+                    key={stop.stopUID}
+                    id={stop.stopUID}
+                    stopName={stop.stopName}
+                    stopSequence={stop.stopSequence}
+                    estimateFilter={estimateFilter}
+                    toggleRound={toggleRound}
+                  />
+                ))
+              ) : (
+                <div className='grid grid-cols-1 sm:h-full gap-4 place-items-center'>
+                  <div className='text-3xl'>請先選擇縣市及路線</div>
+                </div>
+              )}
+            </ol>
+          </div>
         </div>
       </div>
     </section>

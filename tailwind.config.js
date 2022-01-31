@@ -8,7 +8,9 @@ module.exports = {
     },
     extend: {
       screens: {
-        mf: '43.75em',
+        sm: { max: '24.375em' },
+        mf: '47.5em',
+        lt: '89em',
       },
 
       keyframes: {

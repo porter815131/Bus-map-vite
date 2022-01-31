@@ -17,14 +17,14 @@ const Nav = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
 
   return (
-    <nav className='w-full flex justify-between items-center h-20 bg-transparent p-6 pt-6  sticky cursor-pointer'>
+    <nav className='w-full flex justify-between items-center h-20 bg-transparent p-6 pt-6  sticky cursor-pointer z-50'>
       <div className='w-max flex justify-center items-center '>
         <GiBus color='white' size={50} />
 
         <p className='text-4xl text-white font-extrabold '>TAIWAN BUS</p>
       </div>
 
-      <ul className='mf:flex hidden flex-initial list-none justify-between items-center'>
+      <ul className='mf:flex hidden flex-initial list-none justify-between items-center z-50'>
         {['Home', 'Route', 'My Favorite'].map((item, index) => (
           <NavbarItem
             key={item + index}
@@ -34,7 +34,7 @@ const Nav = () => {
           />
         ))}
       </ul>
-      <div className='flex relative justify-end mf:hidden'>
+      <div className='flex relative justify-end mf:hidden z-50'>
         {toggleMenu ? (
           <CgClose
             fontSize={28}
@@ -49,7 +49,7 @@ const Nav = () => {
           />
         )}
         {toggleMenu && (
-          <ul className='z-10 fixed top-0 -right-2 p-3 w-[100vw] h-screen shadow-2xl mf:hidden list-none flex flex-col justify-start items-center rounded-md blue-glassmorphism text-black animate-slide-in '>
+          <ul className='z-50 fixed top-0 -right-2 p-3 w-[100vw] h-screen shadow-2xl mf:hidden list-none flex flex-col justify-start items-center rounded-md blue-glassmorphism text-black animate-slide-in '>
             <li className='text-6xl w-full my-2'>
               <CgClose onClick={() => setToggleMenu(false)} />
             </li>
