@@ -64,7 +64,7 @@ const Map = ({ forthTrip, backTrip, toggleRound, routeName, city }) => {
       zoomControl={true}
       zoom={13}
       scrollWheelZoom={false}
-      className='w-[50%] sm:w-full h-[50vh] lt:h-[60vh] sm:h-50 rounded-lg z-0 relative'
+      className='w-[50%] sm:w-full pd:w-[80vw] h-[50vh] lt:h-[60vh] sm:h-50 rounded-lg z-0 relative'
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

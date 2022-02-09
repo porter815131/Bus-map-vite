@@ -1,5 +1,7 @@
 export { default as Routing } from '../pages/Routing';
 export { default as Nav } from '../pages/Nav';
+export { default as Footer } from '../pages/Footer';
+export { default as Error } from '../pages/Error';
 export { default as Hero } from './Hero';
 export { default as Map } from './Map';
 export { default as RoutingList } from './RoutingList';

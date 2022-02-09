@@ -52,7 +52,7 @@ const SearchRoutes = ({
       <input
         placeholder='例如: 939、932、棕1…'
         value={inputValue}
-        className='z-10 relative w-[80%] sm:w-full h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-2 py-2 sm:mt-2 text-left cursor-pointer focus:outline text-lg sm:text-sm'
+        className='z-10 relative w-[80%] sm:w-full h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-2 py-2 sm:mt-2 text-left cursor-pointer focus:outline text-lg sm:text-sm pd:text-lg'
         type='text'
         list='routes'
         onChange={inputChangeHandler}

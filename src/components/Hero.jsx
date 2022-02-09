@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <div className='w-[100vw] h-[100vh] relative flex justify-center items-center '>
-      <img
+    <div className='w-full h-screen relative flex justify-center items-center '>
+      {/* <img
         className='w-full absolute -top-20 z-[-100] overflow-hidden bg-cover'
         src={bus}
         alt='Bus'
-      ></img>
+      ></img> */}
 
       <Link
         to='/route'

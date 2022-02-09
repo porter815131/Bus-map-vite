@@ -106,7 +106,7 @@ const Routing = ({ setIsLoading }) => {
   }, [routeName, busData]);
 
   return (
-    <section className='flex w-full h-screen flex-col justify-start sm:justify- items-center my-4 sm:mt-5  '>
+    <section className='flex w-full h-screen pd:h-full flex-col justify-between sm:justify-start items-center my-0 sm:mt-5 pd:mb-0'>
       {/* <img src={bus} alt='Bus' className='w-full z-[-100] bg-top bg-cover' /> */}
       <header className='w-[80vw] sm:w-full flex justify-center items-center flex-col shadow-lg sm:shadow-none rounded-2xl sm:rounded-none bg-white mb-4'>
         <h1 className='flex p-2 text-2xl justify-center items-center font-extrabold tracking-[2rem] sm:tracking-tighter'>
@@ -127,9 +127,9 @@ const Routing = ({ setIsLoading }) => {
           />
         </div>
       </header>
-      <div className='flex w-full h-full flex-col justify-center sm:justify-between items-center bg-white mt-8 sm:mt-0'>
+      <div className='flex w-full h-full flex-col justify-center sm:justify-between items-center bg-white mt-8 pd:mt-0 pd:mb-0 '>
         <div className='flex w-max justify-center items-center bg-white p-3 sm:p-1 m-3 my-10 sm:mt-0 rounded-[1rem] border-4 shadow-md'>
-          <div className='text-3xl sm:text-sm font-medium p-3'>
+          <div className='text-3xl sm:text-sm pd:text-xl font-medium p-3 pd:p-2'>
             {routeValue ? (
               <p className='w-fit felx'>
                 <span className='text-[#bb3d3d] text-center mr-2 w-fit'>
@@ -145,7 +145,7 @@ const Routing = ({ setIsLoading }) => {
             )}
           </div>
         </div>
-        <div className='w-[80vw] sm:w-full flex sm:flex-col justify-center items-center relative'>
+        <div className='w-[80vw] pd:w-full flex pd:flex-col justify-center items-center relative'>
           <Map
             forthTrip={forthTrip}
             backTrip={backTrip}
@@ -153,7 +153,7 @@ const Routing = ({ setIsLoading }) => {
             city={city}
             toggleRound={toggleRound}
           />
-          <div className='w-[50%] sm:w-full h-[60vh] ml-10 sm:ml-0 sm:mt-4 flex flex-col justify-center items-center shadow-lg bg-white rounded-lg sm:rounded-none border-2 sm:border-t-2'>
+          <div className='w-[50%] sm:w-full pd:w-[80vw] h-[60vh] ml-10 pd:ml-0 pd:mb-6 pd:mt-4 flex flex-col justify-center items-center shadow-lg bg-white rounded-lg sm:rounded-none border-2 sm:border-t-2'>
             <div className='flex w-full justify-around border-b p-3 divide-x-2 '>
               <button
                 className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full '
@@ -170,8 +170,8 @@ const Routing = ({ setIsLoading }) => {
                   : '返程'}
               </button>
             </div>
-            <ol className='flex w-full h-[91%] flex-col overflow-scroll'>
-              <li className='flex w-full justify-center divide-x p-2 border-b-[1px]'>
+            <ol className='flex w-full h-[91%] pd:h-full flex-col overflow-scroll'>
+              <li className='flex w-full justify-center divide-x p-2 border-b-[1px] pd:tracking-normal'>
                 <p className='font-medium flex-[0.2] text-center'>站序</p>
                 <p className='font-medium flex-[0.45] text-center'>站名</p>
                 <p className='font-medium flex-[0.35] text-center'>預估到站</p>
@@ -188,7 +188,7 @@ const Routing = ({ setIsLoading }) => {
                   />
                 ))
               ) : (
-                <div className='grid grid-cols-1 sm:h-full gap-4 place-items-center'>
+                <div className='grid grid-cols-1 h-[16rem] gap-4 place-items-center'>
                   <div className='text-3xl'>請先選擇縣市及路線</div>
                 </div>
               )}

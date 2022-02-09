@@ -30,7 +30,7 @@ const Nav = () => {
             key={item + index}
             title={item}
             classProps='text-white text-3xl hover:border-b-4 duration-100 ease-in-out'
-            path={item.trim().toLowerCase()}
+            path={item === 'Home' ? '/' : item.trim().toLowerCase()}
           />
         ))}
       </ul>
@@ -54,12 +54,14 @@ const Nav = () => {
               <CgClose onClick={() => setToggleMenu(false)} />
             </li>
             {['Home', 'Route', 'My Favorite'].map((item, index) => (
-              <NavbarItem
-                key={item + index}
-                title={item}
-                classProps='text-6xl my-2 text-lg hover:border-b-2'
-                path={item.trim().toLowerCase()}
-              />
+              <li onClick={() => setToggleMenu(false)}>
+                <NavbarItem
+                  key={item + index}
+                  title={item}
+                  classProps='text-6xl my-4 text-lg hover:bg-sky-500 hover:p-2 hover:rounded-xl '
+                  path={item === 'Home' ? '/' : item.trim().toLowerCase()}
+                />
+              </li>
             ))}
           </ul>
         )}

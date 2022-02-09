@@ -8,8 +8,9 @@ module.exports = {
     },
     extend: {
       screens: {
-        sm: { max: '24.375em' },
-        mf: '47.5em',
+        sm: { max: '25.75em' },
+        mf: { min: '47.5em' },
+        pd: { max: '62.5em' },
         lt: '89em',
       },
 
@@ -24,6 +25,9 @@ module.exports = {
             transform: 'translateX(0%)',
           },
         },
+      },
+      backgroundImage: {
+        bus: "url('/asset/bus-hero.jpg')",
       },
       animation: {
         'slide-in': 'slide-in 0.5s ease-out',
