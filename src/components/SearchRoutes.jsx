@@ -45,29 +45,25 @@ const SearchRoutes = ({
   };
 
   return (
-    <div className='flex w-[50%] sm:w-full sm:flex-col justify-end items-center mx-2 sm:my-2 '>
-      <label className='mx-5 block text-sm font-medium text-gray-700 '>
+    <div className='flex w-[50%] sm:w-full sm:flex-col lt:flex-row justify-center items-center mx-4 sm:my-4 lt:my-2 '>
+      <label className='mx-3 block text-sm font-extrabold text-gray-700 '>
         路線
       </label>
       <input
         placeholder='例如: 939、932、棕1…'
         value={inputValue}
-        className='z-10 relative w-[80%] sm:w-full h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-2 py-2 sm:mt-2 text-left cursor-pointer focus:outline text-lg sm:text-sm pd:text-lg'
+        className='z-10 relative w-[80%] sm:w-full h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-2 py-2 sm:mt-4 lt:mt-0 text-left cursor-pointer focus:outline text-lg sm:text-sm mf:text-lg lt:text-xl'
         type='text'
         list='routes'
         onChange={inputChangeHandler}
         onFocus={() => setInputValue('')}
         id='routeName'
       />
-      <datalist
-        className='ml-3 truncate  flex justify-center items-center w-min'
-        id='routes'
-      >
+      <datalist className='ml-3 truncate w-min' id='routes'>
         {isSelect &&
           routes?.routes?.map(list => (
             <option
               id={list.RouteUID}
-              className='hidden'
               key={list.RouteUID}
               data-value={`${list.RouteUID} [${list.RouteName.Zh_tw}] ${list.DepartureStopNameZh} - ${list.DestinationStopNameZh}`}
             >

@@ -106,13 +106,13 @@ const Routing = ({ setIsLoading }) => {
   }, [routeName, busData]);
 
   return (
-    <section className='flex w-full h-screen sm:h-full flex-col justify-between items-center my-0 sm:mt-0 sm:mb-0'>
+    <section className='flex w-full sm:h-full flex-col justify-center items-center my-0 '>
       {/* <img src={bus} alt='Bus' className='w-full z-[-100] bg-top bg-cover' /> */}
-      <header className='w-[80vw] sm:w-full flex justify-center items-center flex-col shadow-lg sm:shadow-none rounded-2xl sm:rounded-none bg-white mb-4 sm:mb-0'>
-        <h1 className='flex p-2 text-2xl justify-center items-center font-extrabold tracking-[2rem] sm:tracking-tighter'>
+      <header className='lt:w-[80vw] sm:w-full flex justify-center items-center flex-col lt:shadow-lg sm:shadow-none lt:rounded-2xl sm:rounded-none bg-white lt:mb-4 sm:mb-0'>
+        <h1 className='flex p-2 text-2xl justify-center items-center font-extrabold lt:tracking-[2rem] sm:tracking-tighter'>
           搜尋公車
         </h1>
-        <div className='flex sm:flex-col justify-center items-center my-5 w-[80vw]'>
+        <div className='flex sm:flex-col lt:flex-row justify-center items-center my-5 w-[80vw]'>
           <Menu
             setSelectedCity={setSelectedCity}
             setIsSelect={setIsSelect}
@@ -127,11 +127,11 @@ const Routing = ({ setIsLoading }) => {
           />
         </div>
       </header>
-      <div className='flex w-full h-full flex-col justify-center sm:justify-between items-center bg-white mt-10 sm:mt-0 sm:mb-0 '>
-        <div className='flex w-max justify-center items-center bg-white p-3 sm:p-1 m-3 my-10 sm:mt-0 rounded-[1rem] border-4 shadow-md'>
-          <div className='text-3xl sm:text-sm pd:text-xl font-medium p-3 pd:p-2'>
+      <div className='flex w-full h-full flex-col lt:justify-center sm:justify-between items-center bg-white lt:mt-10 sm:mt-0 sm:mb-0 '>
+        <div className='flex w-max justify-center items-center bg-white lt:p-3 sm:p-1 lt:m-3 sm:mt-0 rounded-[1rem] border-4 shadow-md'>
+          <div className='lt:text-3xl sm:text-sm mf:text-xl font-medium lt:p-3 mf:p-2'>
             {routeValue ? (
-              <p className='w-fit felx'>
+              <p className='w-fit flex'>
                 <span className='text-[#bb3d3d] text-center mr-2 w-fit'>
                   {routeValue.route.split(' ', 1)}
                 </span>
@@ -145,7 +145,7 @@ const Routing = ({ setIsLoading }) => {
             )}
           </div>
         </div>
-        <div className='w-[80vw] sm:w-full flex sm:flex-col justify-center items-center relative'>
+        <div className='lt:w-[90vw] sm:w-full flex sm:flex-col lt:flex-row lt:my-[5rem] justify-center items-center relative'>
           <Map
             forthTrip={forthTrip}
             backTrip={backTrip}
@@ -153,7 +153,7 @@ const Routing = ({ setIsLoading }) => {
             city={city}
             toggleRound={toggleRound}
           />
-          <div className='w-[50%] sm:w-full pd:w-[80vw] h-[60vh] ml-10 sm:ml-0 sm:mt-6 flex flex-col justify-center items-center shadow-lg bg-white rounded-lg sm:rounded-none border-2 sm:border-t-2'>
+          <div className='lt:w-[50%] sm:w-full h-[50vh] lt:ml-10 sm:ml-0 sm:mt-6 lt:mt-0 flex flex-col justify-center items-center shadow-lg bg-white lt:rounded-lg sm:rounded-none border-2 sm:border-t-2'>
             <div className='flex w-full justify-around border-b p-3 divide-x-2 '>
               <button
                 className='hover:border-b-2 flex-1 border-blue-700 text-xl w-full '

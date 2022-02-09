@@ -20,18 +20,18 @@ const RoutingList = ({
 
   return (
     <li key={key} className='flex w-full justify-between items-center p-2 '>
-      <p className='p-2 left-12 sm:left-5 relative before:absolute border-2 rounded-[50%] w-10 h-10 text-center align-middle before:left-4 before:top-9 before:h-[1.2rem] before:border-l-gray-200 before:border-l-2 bg-[#3bc15a] text-white'>
+      <p className='p-2 mf:left-12 sm:left-5 relative before:absolute border-2 rounded-[50%] w-10 h-10 text-center align-middle before:left-4 before:top-9 before:h-[1.2rem] before:border-l-gray-200 before:border-l-2 bg-[#3bc15a] text-white'>
         {stopSequence}
       </p>
-      <p className='font-bold sm:font-extrabold text-lg sm:text-sm'>
+      <p className='font-bold sm:font-extrabold mf:text-lg sm:text-sm'>
         {stopName}
       </p>
       <p
         className={
           estimateFilter?.map(i => i.EstimateTime) &&
           estimateFilter?.map(i => i.EstimateTime) !== undefined
-            ? 'p-1 w-[9rem] sm:w-[6rem] sm:text-sm text-center text-white bg-blue-600 border-gray-200 rounded-xl border-4'
-            : 'w-[9rem] sm:w-[6rem]'
+            ? 'p-1 mf:w-[9rem] sm:w-[6rem] sm:text-sm text-center text-white bg-blue-600 border-gray-200 rounded-xl border-4'
+            : 'mf:w-[9rem] sm:w-[6rem]'
         }
       >
         {(toggleRound ? forthTime : backTime)?.map(i => {

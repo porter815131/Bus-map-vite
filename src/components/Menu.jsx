@@ -207,13 +207,13 @@ const Menu = ({ setSelectedCity, setIsSelect, setRoutes }) => {
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>
-          <Listbox.Label className=' mx-5 block text-sm font-medium text-gray-700'>
+          <Listbox.Label className='mx-5 block text-sm font-extrabold text-gray-700'>
             城市
           </Listbox.Label>
-          <div className='mt-1 sm:my-2 relative sm:w-full'>
-            <Listbox.Button className='mr-20 z-10 relative w-full h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm pd:text-lg'>
+          <div className=' sm:my-2 relative lt:w-[80%] sm:w-full '>
+            <Listbox.Button className='mr-20 z-10 relative w-full h-15 bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mf:text-xl'>
               <span className='flex items-center justify-center'>
-                <span className='ml-3 block truncate text-lg sm:text-sm w-[10rem] text-center'>
+                <span className='ml-3 block truncate mf:text-xl sm:text-sm w-[10rem] text-center'>
                   {selected.CityName}
                 </span>
               </span>
@@ -232,7 +232,7 @@ const Menu = ({ setSelectedCity, setIsSelect, setRoutes }) => {
               leaveFrom='opacity-100'
               leaveTo='opacity-0'
             >
-              <Listbox.Options className='absolute z-10 sm:z-20 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm'>
+              <Listbox.Options className='absolute z-10 sm:z-20 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm mf:text-xl'>
                 {city.map(city => (
                   <Listbox.Option
                     key={city.CityID}
