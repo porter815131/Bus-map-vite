@@ -8,9 +8,9 @@ module.exports = {
     },
     extend: {
       screens: {
-        sm: { max: '25.75em' },
+        sm: { min: '24.375em' },
         mf: { min: '47.5em' },
-        pd: { max: '62.5em' },
+        pd: { min: '62.5em' },
         lt: '89em',
       },
 
